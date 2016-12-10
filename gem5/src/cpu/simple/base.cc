@@ -588,6 +588,7 @@ BaseSimpleCPU::postExecute()
     if (curStaticInst->isControl()) {
         ++t_info.numBranches;
     }
+// TODO: do I have to add insts?
 
     /* Power model statistics */
     //integer alu accesses

@@ -207,17 +207,23 @@
                         panic("M5 panic instruction called at pc = %#x.\n",
                               RIP);
                     }}, IsNonSpeculative);
-                    0x55: m5reserved1({{
-                        warn("M5 reserved opcode 1 ignored.\n");
+
+                    0x55: m5enq_conf_fifo({{
+                        PseudoInst::deq_conf_fifo(xc->tcBase(), Rdi, Rsi);
+                        warn("Enqueue configure FIFO.\n");
                     }}, IsNonSpeculative);
-                    0x56: m5reserved2({{
-                        warn("M5 reserved opcode 2 ignored.\n");
+                    0x56: m5deq_conf_fifo({{
+                        PseudoInst::enq_input_fifo(xc->tcBase(), Rdi, Rsi);
+                        warn("Dequeue configure FIFO.\n");
                     }}, IsNonSpeculative);
-                    0x57: m5reserved3({{
-                        warn("M5 reserved opcode 3 ignored.\n");
+                    0x57: m5enq_input_fifo({{
+                        PseudoInst::enq_input_fifo(xc->tcBase(), Rdi, Rsi);
+                        warn("Enqueue input FIFO.\n");
                     }}, IsNonSpeculative);
-                    0x58: m5reserved4({{
-                        warn("M5 reserved opcode 4 ignored.\n");
+                    0x58: m5deq_output_fifo({{
+                        PseudoInst::deq_output_fifo(xc->tcBase(), Rdi, Rsi);
+
+                        warn("Dequeue output FIFO.\n");
                     }}, IsNonSpeculative);
                     0x59: m5reserved5({{
                         warn("M5 reserved opcode 5 ignored.\n");
@@ -228,6 +234,8 @@
                     0x5b: m5_work_end({{
                         PseudoInst::workend(xc->tcBase(), Rdi, Rsi);
                     }}, IsNonSpeculative);
+                    0x62: m5togglesync({{
+                        PseudoInst::togglesync(xc->tcBase());                    }}, IsNonSpeculative, IsQuiesce);
                     default: Inst::UD2();
                 }
             }

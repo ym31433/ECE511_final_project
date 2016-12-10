@@ -1,0 +1,10 @@
+# -*- mode:python -*-
+
+Import('*')
+
+if not env['BUILD_NPU']:
+    Return()
+
+SimObject('NPU.py')
+
+Source('npu.cc')

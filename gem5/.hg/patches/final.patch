@@ -1,0 +1,150 @@
+# HG changeset patch
+# Parent b3d5f0e9e258ed714edf90dab772ace96141da0f
+
+diff --git a/src/doxygen/footer.html b/src/doxygen/footer.html
+deleted file mode 100644
+--- a/src/doxygen/footer.html
++++ /dev/null
+@@ -1,5 +0,0 @@
+-<hr size="1"><address style="align: right;"><small>
+-Generated on $datetime for $projectname by <a href="http://www.doxygen.org/index.html"> doxygen</a> $doxygenversion</small></address>
+-
+-</body>
+-</html>
+diff --git a/src/doxygen/images/gem5_MS_Fig1.PNG b/src/doxygen/images/gem5_MS_Fig1.PNG
+deleted file mode 100755
+index ed0f11fb3ea5773847db7e68aa4851036ebadaac..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+GIT binary patch
+literal 0
+Hc$@<O00001
+
+diff --git a/src/doxygen/images/gem5_MS_Fig2.PNG b/src/doxygen/images/gem5_MS_Fig2.PNG
+deleted file mode 100755
+index a6dac40c331c3686ba4e5769b470f544ed1801bb..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+GIT binary patch
+literal 0
+Hc$@<O00001
+
+diff --git a/src/doxygen/images/gem5_MS_Fig3.PNG b/src/doxygen/images/gem5_MS_Fig3.PNG
+deleted file mode 100755
+index 68c72fc74f65008f4c272a7050e272245b98d013..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+GIT binary patch
+literal 0
+Hc$@<O00001
+
+diff --git a/src/doxygen/images/gem5_MS_Fig4.PNG b/src/doxygen/images/gem5_MS_Fig4.PNG
+deleted file mode 100755
+index 2e535d03f8d02fc7a5ca53f95feb1abefa0b7898..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+GIT binary patch
+literal 0
+Hc$@<O00001
+
+diff --git a/src/doxygen/images/gem5_MS_Fig5.PNG b/src/doxygen/images/gem5_MS_Fig5.PNG
+deleted file mode 100755
+index b8d4041ba0c01bff1f3b94fed59b72dbff0a0c25..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+GIT binary patch
+literal 0
+Hc$@<O00001
+
+diff --git a/src/doxygen/images/gem5_MS_Fig6.PNG b/src/doxygen/images/gem5_MS_Fig6.PNG
+deleted file mode 100755
+index 05c16fb0c459b042030c908578d77b4124cfe219..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+GIT binary patch
+literal 0
+Hc$@<O00001
+
+diff --git a/src/doxygen/images/gem5_MS_Fig7.PNG b/src/doxygen/images/gem5_MS_Fig7.PNG
+deleted file mode 100755
+index fc4ec8df3dca37cf84bb26f9f826ff2706ed9141..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+GIT binary patch
+literal 0
+Hc$@<O00001
+
+diff --git a/src/doxygen/images/gem5_MS_Fig8.PNG b/src/doxygen/images/gem5_MS_Fig8.PNG
+deleted file mode 100755
+index ec03512590bbeefbe1ce4318cd0ba5ba858344a7..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+GIT binary patch
+literal 0
+Hc$@<O00001
+
+diff --git a/src/doxygen/images/gem5_MS_Fig9.PNG b/src/doxygen/images/gem5_MS_Fig9.PNG
+deleted file mode 100755
+index 0a4f16e0eced9297ed380054de635cb68b84c3a1..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+GIT binary patch
+literal 0
+Hc$@<O00001
+
+diff --git a/src/doxygen/stl.hh b/src/doxygen/stl.hh
+deleted file mode 100644
+--- a/src/doxygen/stl.hh
++++ /dev/null
+@@ -1,69 +0,0 @@
+-/*
+- * Copyright (c) 2003-2005 The Regents of The University of Michigan
+- * All rights reserved.
+- *
+- * Redistribution and use in source and binary forms, with or without
+- * modification, are permitted provided that the following conditions are
+- * met: redistributions of source code must retain the above copyright
+- * notice, this list of conditions and the following disclaimer;
+- * redistributions in binary form must reproduce the above copyright
+- * notice, this list of conditions and the following disclaimer in the
+- * documentation and/or other materials provided with the distribution;
+- * neither the name of the copyright holders nor the names of its
+- * contributors may be used to endorse or promote products derived from
+- * this software without specific prior written permission.
+- *
+- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+- * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+- * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+- *
+- * Authors: Erik Hallnor
+- *          Nathan Binkert
+- */
+-
+-/**
+- * @file
+- * Dummy definitions of STL classes to pick up relationships in doxygen.
+- */
+-
+-namespace std {
+-
+-/** STL vector class*/
+-template <class T> class vector {
+-  public:
+-    /** Dummy Item */
+-    T item;
+-};
+-
+-/** STL deque class */
+-template <class T> class deque {
+-  public:
+-    /** Dummy Item */
+-    T item;
+-};
+-
+-/** STL list class */
+-template <class T> class list {
+-  public:
+-    /** Dummy Item */
+-    T item;
+-};
+-
+-/** STL pair class */
+-template <class X, class Y> class pair {
+-  public:
+-    /** Dummy Item */
+-    X item1;
+-    /** Dummy Item */
+-    Y item2;
+-};
+-
+-}

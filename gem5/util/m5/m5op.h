@@ -46,6 +46,11 @@ uint64_t quiesceTime(void);
 uint64_t rpns();
 void wakeCPU(uint64_t cpuid);
 
+void m5enq_conf_fifo(ThreadContext *tc,   uint64_t& data, uint64_t& addr);
+void m5deq_conf_fifo(ThreadContext *tc,   uint64_t& data, uint64_t& addr);
+void m5enq_input_fifo(ThreadContext *tc,  uint64_t& data, uint64_t& addr);
+void m5deq_output_fifo(ThreadContext *tc, uint64_t& data, uint64_t& addr);
+
 void m5_exit(uint64_t ns_delay);
 void m5_fail(uint64_t ns_delay, uint64_t code);
 uint64_t m5_initparam(uint64_t key_str1, uint64_t key_str2);
@@ -57,6 +62,7 @@ uint64_t m5_readfile(void *buffer, uint64_t len, uint64_t offset);
 uint64_t m5_writefile(void *buffer, uint64_t len, uint64_t offset, const char *filename);
 void m5_debugbreak(void);
 void m5_switchcpu(void);
+void m5_togglesync(void);
 void m5_addsymbol(uint64_t addr, char *symbol);
 void m5_panic(void);
 void m5_work_begin(uint64_t workid, uint64_t threadid);

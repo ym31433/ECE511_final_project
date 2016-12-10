@@ -120,6 +120,9 @@ class BaseSimpleCPU : public BaseCPU
         DcacheRetry,
         DcacheWaitResponse,
         DcacheWaitSwitch,
+	// npu status
+	NpuRetry,
+	NpuWaitResponse,
     };
 
     Status _status;

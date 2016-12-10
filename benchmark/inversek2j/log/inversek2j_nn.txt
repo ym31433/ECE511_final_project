@@ -1,0 +1,18 @@
+gem5 Simulator System.  http://gem5.org
+gem5 is copyrighted software; use the --copyright option for details.
+
+gem5 compiled Dec  7 2016 22:32:01
+gem5 started Dec  7 2016 22:35:47
+gem5 executing on wyatt-8, pid 29951
+command line: /research/yhtseng2/ECE511_final_project/gem5/build/X86/gem5.fast --outdir=/research/yhtseng2/ECE511_final_project/benchmark/inversek2j/m5out/nn /research/yhtseng2/ECE511_final_project/gem5/configs/example/npu_se.py --cpu-type=npu_cpu -c /research/yhtseng2/ECE511_final_project/benchmark/inversek2j/bin/inversek2j.nn.out -o '/research/yhtseng2/ECE511_final_project/benchmark/inversek2j/test.data/input/*.data /research/yhtseng2/ECE511_final_project/benchmark/inversek2j/test.data/output/*.data_inversek2j_gem5_out_nn.data'
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/research/yhtseng2/ECE511_final_project/gem5/src/python/m5/main.py", line 400, in main
+    exec filecode in scope
+  File "/research/yhtseng2/ECE511_final_project/gem5/configs/example/npu_se.py", line 254, in <module>
+    system.cpu[npu_idx].cpuPort = system.cpu[i].npuPort
+  File "/research/yhtseng2/ECE511_final_project/gem5/src/python/m5/SimObject.py", line 1105, in __getattr__
+    raise AttributeError, err_string
+AttributeError: object 'NpuCPU' has no attribute 'npuPort'
+  (C++ object is not yet constructed, so wrapped C++ methods are unavailable.)

@@ -41,8 +41,19 @@ if 'TimingSimpleCPU' in env['CPU_MODELS']:
     SimObject('TimingSimpleCPU.py')
     Source('timing.cc')
 
+if 'NpuCPU' in env['CPU_MODELS']:
+    need_simple_base = True
+    SimObject('NpuCPU.py')
+    Source('npu_cpu.cc')
+#    TraceFlag('NpuCPU')
+    # make sure that SimpleCPU is part of the TraceFlag
+    # Otherwise, DPRINTF may not work properly
+#    TraceFlag('SimpleCPU')
+ 
+
 if 'AtomicSimpleCPU' in env['CPU_MODELS'] or \
-       'TimingSimpleCPU' in env['CPU_MODELS']:
+       'TimingSimpleCPU' in env['CPU_MODELS'] or \
+   'NpuCPU' in env['CPU_MODELS']:
     DebugFlag('SimpleCPU')
 
 if need_simple_base:

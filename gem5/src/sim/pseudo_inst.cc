@@ -195,9 +195,21 @@ pseudoInst(ThreadContext *tc, uint8_t func, uint8_t subfunc)
         break;
 
       case 0x55: // annotate_func
+        enq_conf_fifo(tc, args[0], args[1]);
+        break;
+
       case 0x56: // reserved2_func
+        deq_conf_fifo(tc, args[0], args[1]);
+        break;
+
       case 0x57: // reserved3_func
+        enq_input_fifo(tc, args[0], args[1]);
+        break;
+
       case 0x58: // reserved4_func
+        deq_output_fifo(tc, args[0], args[1]);
+        break;
+
       case 0x59: // reserved5_func
         warn("Unimplemented m5 op (0x%x)\n", func);
         break;
@@ -211,6 +223,11 @@ pseudoInst(ThreadContext *tc, uint8_t func, uint8_t subfunc)
         m5PageFault(tc);
         break;
 
+      /* dist-gem5 functions */
+      case 0x62: // distToggleSync_func
+        togglesync(tc);
+        break;
+
       default:
         warn("Unhandled m5 op: 0x%x\n", func);
         break;
@@ -218,6 +235,35 @@ pseudoInst(ThreadContext *tc, uint8_t func, uint8_t subfunc)
 
     return 0;
 }
+      
+void
+enq_conf_fifo(ThreadContext *tc, uint64_t& hostdata, uint64_t &acc_addr){
+  DPRINTF(PseudoInst, "PseudoInst::enq_conf_fifo()\n");
+  
+  acc_addr=hostdata;
+  
+
+}
+void
+deq_conf_fifo(ThreadContext *tc,uint64_t& hostdata,uint64_t&  acc_addr){
+
+  DPRINTF(PseudoInst, "PseudoInst::deq_conf_fifo()\n");
+  
+  hostdata=acc_addr;
+}
+
+void
+enq_input_fifo(ThreadContext *tc, uint64_t& hostdata,uint64_t& acc_addr){
+  DPRINTF(PseudoInst, "PseudoInst::enq_input_fifo()\n");
+  acc_addr=hostdata;
+}
+
+void
+deq_output_fifo(ThreadContext *tc, uint64_t &hostdata,uint64_t& acc_addr){
+  DPRINTF(PseudoInst, "PseudoInst::deq_output_fifo\n");
+  hostdata=acc_addr; 
+}
+
 
 void
 arm(ThreadContext *tc)
@@ -572,6 +618,13 @@ switchcpu(ThreadContext *tc)
 {
     DPRINTF(PseudoInst, "PseudoInst::switchcpu()\n");
     exitSimLoop("switchcpu");
+}
+
+void
+togglesync(ThreadContext *tc)
+{
+    DPRINTF(PseudoInst, "PseudoInst::togglesync()\n");
+    DistIface::toggleSync(tc);
 }
 
 //

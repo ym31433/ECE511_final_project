@@ -1,3 +1,4 @@
 TARGET_ISA = 'x86'
-CPU_MODELS = 'AtomicSimpleCPU,O3CPU,TimingSimpleCPU'
+BUILD_NPU = True
+CPU_MODELS = 'AtomicSimpleCPU,O3CPU,TimingSimpleCPU,NpuCPU'
 PROTOCOL = 'MI_example'

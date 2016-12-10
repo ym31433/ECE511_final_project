@@ -1241,6 +1241,7 @@ sticky_vars.AddVariables(
     BoolVariable('CP_ANNOTATE', 'Enable critical path annotation capability', False),
     BoolVariable('USE_KVM', 'Enable hardware virtualized (KVM) CPU models', have_kvm),
     BoolVariable('BUILD_GPU', 'Build the compute-GPU model', False),
+    BoolVariable('BUILD_NPU', 'Build the npu model', False),
     EnumVariable('PROTOCOL', 'Coherence protocol for Ruby', 'None',
                   all_protocols),
     EnumVariable('BACKTRACE_IMPL', 'Post-mortem dump implementation',

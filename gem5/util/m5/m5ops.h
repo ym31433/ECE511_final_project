@@ -67,9 +67,10 @@
 #define addsymbol_func          0x53
 #define panic_func              0x54
 
-#define reserved2_func          0x56 // Reserved for user
-#define reserved3_func          0x57 // Reserved for user
-#define reserved4_func          0x58 // Reserved for user
+#define enq_conf_fifo_func
+#define deq_conf_fifo_func          0x56 // Reserved for user
+#define enq_input_fifo_func          0x57 // Reserved for user
+#define deq_output_fifo_func          0x58 // Reserved for user
 #define reserved5_func          0x59 // Reserved for user
 
 #define work_begin_func         0x5a
@@ -77,6 +78,7 @@
 
 #define syscall_func            0x60 // Reserved for user
 #define pagefault_func          0x61 // Reserved for user
+#define togglesync_func         0x62
 
 // These operations are for critical path annotation
 #define annotate_func     0x55
@@ -121,7 +123,8 @@
     M5OP(m5_addsymbol, addsymbol_func, 0);              \
     M5OP(m5_panic, panic_func, 0);                      \
     M5OP(m5_work_begin, work_begin_func, 0);            \
-    M5OP(m5_work_end, work_end_func, 0);
+    M5OP(m5_work_end, work_end_func, 0);                \
+    M5OP(m5_togglesync, togglesync_func, 0);
 
 #define FOREACH_M5_ANNOTATION                   \
     M5_ANNOTATION(m5a_bsm, an_bsm);             \
