@@ -67,7 +67,7 @@
 #define addsymbol_func          0x53
 #define panic_func              0x54
 
-#define enq_conf_fifo_func
+#define enq_conf_fifo_func		0x55
 #define deq_conf_fifo_func          0x56 // Reserved for user
 #define enq_input_fifo_func          0x57 // Reserved for user
 #define deq_output_fifo_func          0x58 // Reserved for user

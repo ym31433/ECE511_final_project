@@ -624,7 +624,7 @@ void
 togglesync(ThreadContext *tc)
 {
     DPRINTF(PseudoInst, "PseudoInst::togglesync()\n");
-    DistIface::toggleSync(tc);
+    //DistIface::toggleSync(tc);
 }
 
 //
