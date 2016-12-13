@@ -62,10 +62,10 @@ namespace PseudoInst {
  * @param subfunc M5 minor function number. Mainly used for annotations.
  */
 uint64_t pseudoInst(ThreadContext *tc, uint8_t func, uint8_t subfunc);
-void enq_conf_fifo(ThreadContext *tc,   uint64_t& data, uint64_t& addr);
-void deq_conf_fifo(ThreadContext *tc,   uint64_t& data, uint64_t& addr);
-void enq_input_fifo(ThreadContext *tc,  uint64_t& data, uint64_t& addr);
-void deq_output_fifo(ThreadContext *tc, uint64_t& data, uint64_t& addr);
+void enq_conf_fifo(ThreadContext *tc,   uint64_t& data);
+void deq_conf_fifo(ThreadContext *tc,   uint64_t& data);
+void enq_input_fifo(ThreadContext *tc,  uint64_t& data);
+void deq_output_fifo(ThreadContext *tc, uint64_t& data);
 void arm(ThreadContext *tc);
 void quiesce(ThreadContext *tc);
 void quiesceSkip(ThreadContext *tc);

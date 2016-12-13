@@ -85,6 +85,7 @@ class Npu : public MemObject {
 	}
 	Tick ticks(unsigned numCycles) const { return clock*(Tick)numCycles; }
 
+//	CpuPort getCpuPort() const { return cpuPort; }
 //	bool getCallRetry() const { return callRetry; }
 //	Tick getCalculateTick() const { return calculateTick; }
 //	void setCallRetry(const bool set) { callRetry = set; }

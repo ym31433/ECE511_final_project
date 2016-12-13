@@ -34,7 +34,7 @@ else
 fi
 
 ##### set path #####
-HOME=/research/yhtseng2/ECE511_final_project
+HOME=/home/cosine/ECE511_final_project
 BENCHMARK=${HOME}/benchmark/${benchmark_name}
 IN_FILE=${BENCHMARK}/test.data/input/*.data
 FILENAME=$(basename "$IN_FILE")

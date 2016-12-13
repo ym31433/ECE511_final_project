@@ -48,6 +48,9 @@
 #include "cpu/translation.hh"
 #include "params/NpuCPU.hh"
 
+#include "npu/npu.hh"
+//class Npu;
+
 class NpuCPU : public BaseSimpleCPU
 {
   public:
@@ -133,7 +136,7 @@ class NpuCPU : public BaseSimpleCPU
     FetchTranslation fetchTranslation;
 
     void threadSnoop(PacketPtr pkt, ThreadID sender);
-    void sendData(RequestPtr req, uint8_t *data, uint64_t *res, bool read);
+    void sendData(RequestPtr req, uint8_t *data, uint64_t *res, bool read, bool do_npu);
     void sendSplitData(RequestPtr req1, RequestPtr req2, RequestPtr req,
                        uint8_t *data, bool read);
 
@@ -147,6 +150,7 @@ class NpuCPU : public BaseSimpleCPU
     bool handleReadPacket(PacketPtr pkt);
     // This function always implicitly uses dcache_pkt.
     bool handleWritePacket();
+	void handleNpuPacket(PacketPtr pkt);
 
     /**
      * A TimingCPUPort overrides the default behaviour of the
@@ -187,7 +191,10 @@ class NpuCPU : public BaseSimpleCPU
         NpuPort(NpuCPU *_cpu)
             : TimingCPUPort(_cpu->name() + ".npu_port", _cpu),
               tickEvent(_cpu)
-        { }
+        {
+			BaseSlavePort *port = &(cpu->npuPtr->cpuPort);
+            bind(*port);
+        }
 
       protected:
 
@@ -323,6 +330,7 @@ class NpuCPU : public BaseSimpleCPU
     void sendFetch(const Fault &fault, RequestPtr req, ThreadContext *tc);
     void completeIfetch(PacketPtr );
     void completeDataAccess(PacketPtr pkt);
+	void completeNpuDataAccess(PacketPtr pkt);
     void advanceInst(const Fault &fault);
 
     /** This function is used by the page table walker to determine if it could
@@ -388,6 +396,11 @@ class NpuCPU : public BaseSimpleCPU
      * @returns true if the CPU is drained, false otherwise.
      */
     bool tryCompleteDrain();
+
+  public:
+//    Npu* getNpu() const { return npuPtr; }
+//  private:
+    Npu* npuPtr;
 };
 
 #endif // __CPU_SIMPLE_TIMING_HH__

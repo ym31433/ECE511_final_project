@@ -209,19 +209,19 @@
                     }}, IsNonSpeculative);
 
                     0x55: m5enq_conf_fifo({{
-                        PseudoInst::deq_conf_fifo(xc->tcBase(), Rdi, Rsi);
+                        PseudoInst::deq_conf_fifo(xc->tcBase(), Rdi);
                         warn("Enqueue configure FIFO.\n");
                     }}, IsNonSpeculative);
                     0x56: m5deq_conf_fifo({{
-                        PseudoInst::enq_input_fifo(xc->tcBase(), Rdi, Rsi);
+                        PseudoInst::enq_input_fifo(xc->tcBase(), Rdi);
                         warn("Dequeue configure FIFO.\n");
                     }}, IsNonSpeculative);
                     0x57: m5enq_input_fifo({{
-                        PseudoInst::enq_input_fifo(xc->tcBase(), Rdi, Rsi);
+                        PseudoInst::enq_input_fifo(xc->tcBase(), Rdi);
                         warn("Enqueue input FIFO.\n");
                     }}, IsNonSpeculative);
                     0x58: m5deq_output_fifo({{
-                        PseudoInst::deq_output_fifo(xc->tcBase(), Rdi, Rsi);
+                        PseudoInst::deq_output_fifo(xc->tcBase(), Rdi);
 
                         warn("Dequeue output FIFO.\n");
                     }}, IsNonSpeculative);

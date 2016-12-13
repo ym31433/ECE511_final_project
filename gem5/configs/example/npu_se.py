@@ -190,7 +190,7 @@ if options.smt and options.num_cpus > 1:
 
 np = options.num_cpus
 if not (np==1): fatal("Npu can only support 1 cpu now!") # cosine
-system = System(cpu = [CPUClass(cpu_id=i) for i in xrange(np)] + [npu],
+system = System(cpu = [CPUClass(cpu_id=i, npuPtr=&npu) for i in xrange(np)] + [npu],
                 mem_mode = test_mem_mode,
                 mem_ranges = [AddrRange(options.mem_size)],
                 cache_line_size = options.cacheline_size)
@@ -250,8 +250,8 @@ if options.simpoint_profile:
         fatal("SimPoint generation not supported with more than one CPUs")
 
 # connect NPU to CPU
-for i in xrange(np): # np should be 1 now
-    system.cpu[npu_idx].cpuPort = system.cpu[i].npuPort
+#for i in xrange(np): # np should be 1 now
+#    system.cpu[npu_idx].cpuPort = system.cpu[i].npuPort
 
 for i in xrange(np):
     if options.smt:

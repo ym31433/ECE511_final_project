@@ -279,14 +279,32 @@ NpuCPU::handleReadPacket(PacketPtr pkt)
 }
 
 void
+NpuCPU::handleNpuPacket(PacketPtr pkt) {
+	if(!npuPort.sendTimingReq(pkt)) {
+		_status = NpuRetry;
+		npu_pkt = pkt;
+	}
+	else {
+		_status = NpuWaitResponse;
+		npu_pkt = NULL;
+	}
+}
+
+void
 NpuCPU::sendData(RequestPtr req, uint8_t *data, uint64_t *res,
-                          bool read)
+                          bool read, bool do_npu)
 {
     SimpleExecContext &t_info = *threadInfo[curThread];
     SimpleThread* thread = t_info.thread;
 
     PacketPtr pkt = buildPacket(req, read);
     pkt->dataDynamic<uint8_t>(data);
+
+	// npu access
+	if(do_npu) {
+		handleNpuPacket(pkt);
+	}
+
     if (req->getFlags().isSet(Request::NO_ACCESS)) {
         assert(!dcache_pkt);
         pkt->makeResponse();
@@ -576,7 +594,7 @@ NpuCPU::finishTranslation(WholeTranslationState *state)
     } else {
         if (!state->isSplit) {
             sendData(state->mainReq, state->data, state->res,
-                     state->mode == BaseTLB::Read);
+                     state->mode == BaseTLB::Read, false);
         } else {
             sendSplitData(state->sreqLow, state->sreqHigh, state->mainReq,
                           state->data, state->mode == BaseTLB::Read);
@@ -692,10 +710,23 @@ NpuCPU::advanceInst(const Fault &fault)
     }
 }
 
+void
+NpuCPU::completeNpuDataAccess(PacketPtr pkt) {
+	assert(pkt);
+	assert(pkt->req);
+	pkt->req->setAccessLatency();
+	updateCycleCounts();
+	_status = BaseSimpleCPU::Running;
+	delete pkt->req;
+	delete pkt;
+	postExecute();
+}
+
 //NPUPort
 void
 NpuCPU::NpuPort::NTickEvent::process()
 {
+	cpu->completeNpuDataAccess(pkt);
 }
 
 bool
@@ -704,6 +735,7 @@ NpuCPU::NpuPort::recvTimingResp(PacketPtr pkt)
     DPRINTF(SimpleCPU, "Received npu response %#x\n", pkt->getAddr());
     // we should only ever see one response per cycle since we only
     // issue a new request once this response is sunk
+    assert(npu->_status = NpuWaitResponse);
     assert(!tickEvent.scheduled());
     // delay processing of returned data until next CPU clock edge
     tickEvent.schedule(pkt, cpu->clockEdge());

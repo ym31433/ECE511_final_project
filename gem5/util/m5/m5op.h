@@ -46,10 +46,10 @@ uint64_t quiesceTime(void);
 uint64_t rpns();
 void wakeCPU(uint64_t cpuid);
 
-void m5enq_conf_fifo(ThreadContext *tc,   uint64_t& data, uint64_t& addr);
-void m5deq_conf_fifo(ThreadContext *tc,   uint64_t& data, uint64_t& addr);
-void m5enq_input_fifo(ThreadContext *tc,  uint64_t& data, uint64_t& addr);
-void m5deq_output_fifo(ThreadContext *tc, uint64_t& data, uint64_t& addr);
+void m5enq_conf_fifo(ThreadContext *tc,   uint64_t& data);
+void m5deq_conf_fifo(ThreadContext *tc,   uint64_t& data);
+void m5enq_input_fifo(ThreadContext *tc,  uint64_t& data);
+void m5deq_output_fifo(ThreadContext *tc, uint64_t& data);
 
 void m5_exit(uint64_t ns_delay);
 void m5_fail(uint64_t ns_delay, uint64_t code);

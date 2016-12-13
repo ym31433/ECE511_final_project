@@ -76,6 +76,31 @@
 #include "sim/stats.hh"
 #include "sim/system.hh"
 #include "sim/vptr.hh"
+#include "cpu/simple/npu_cpu.hh"
+#include "cpu/simple/timing.hh"
+#include "npu/npu.hh"
+
+#include "arch/locked_mem.hh"
+#include "arch/mmapped_ipr.hh"
+#include "arch/utility.hh"
+#include "base/bigint.hh"
+#include "config/the_isa.hh"
+#include "cpu/simple/timing.hh"
+#include "cpu/exetrace.hh"
+#include "debug/Config.hh"
+#include "debug/Drain.hh"
+#include "debug/ExecFaulting.hh"
+#include "debug/SimpleCPU.hh"
+#include "mem/packet.hh"
+#include "mem/packet_access.hh"
+#include "params/TimingSimpleCPU.hh"
+#include "sim/faults.hh"
+#include "sim/full_system.hh"
+#include "sim/system.hh"
+
+#include "debug/Mwait.hh"
+
+
 
 using namespace std;
 
@@ -195,19 +220,19 @@ pseudoInst(ThreadContext *tc, uint8_t func, uint8_t subfunc)
         break;
 
       case 0x55: // annotate_func
-        enq_conf_fifo(tc, args[0], args[1]);
+        enq_conf_fifo(tc, args[0]);
         break;
 
       case 0x56: // reserved2_func
-        deq_conf_fifo(tc, args[0], args[1]);
+        deq_conf_fifo(tc, args[0]);
         break;
 
       case 0x57: // reserved3_func
-        enq_input_fifo(tc, args[0], args[1]);
+        enq_input_fifo(tc, args[0]);
         break;
 
       case 0x58: // reserved4_func
-        deq_output_fifo(tc, args[0], args[1]);
+        deq_output_fifo(tc, args[0]);
         break;
 
       case 0x59: // reserved5_func
@@ -237,31 +262,59 @@ pseudoInst(ThreadContext *tc, uint8_t func, uint8_t subfunc)
 }
       
 void
-enq_conf_fifo(ThreadContext *tc, uint64_t& hostdata, uint64_t &acc_addr){
+enq_conf_fifo(ThreadContext *tc, uint64_t& hostdata){
   DPRINTF(PseudoInst, "PseudoInst::enq_conf_fifo()\n");
   
-  acc_addr=hostdata;
+  NpuCPU* npu_cpu_ptr = (NpuCPU*)tc->getCpuPtr(); 
+  uint8_t data =hostdata>>56;
+  data = hostdata ;
+  Addr addr;
+
+  SimpleExecContext &t_info = *(npu_cpu_ptr->threadInfo[tc->threadId()]);
+  SimpleThread* thread = t_info.thread;
+  const Addr pc = thread->instAddr(); 
+
+
+  Request::Flags flags = 0x00008000; //PRIVILEGED 
+  RequestPtr req = new Request(0, addr, 8, flags ,npu_cpu_ptr->dataMasterId(), pc,
+                                 thread->contextId());
+
+
+  npu_cpu_ptr->sendData(req ,&data, &addr,true);
   
 
 }
 void
-deq_conf_fifo(ThreadContext *tc,uint64_t& hostdata,uint64_t&  acc_addr){
+deq_conf_fifo(ThreadContext *tc,uint64_t& hostdata){
 
   DPRINTF(PseudoInst, "PseudoInst::deq_conf_fifo()\n");
   
-  hostdata=acc_addr;
+  hostdata=0;
 }
 
 void
-enq_input_fifo(ThreadContext *tc, uint64_t& hostdata,uint64_t& acc_addr){
+enq_input_fifo(ThreadContext *tc, uint64_t& hostdata){
   DPRINTF(PseudoInst, "PseudoInst::enq_input_fifo()\n");
-  acc_addr=hostdata;
+  uint8_t data = hostdata >> 56;  
+  NpuCPU* npu_cpu_ptr = (NpuCPU*)tc->getCpuPtr(); 
+  Request::Flags flags = 0x00008000; //PRIVILEGED 
+  SimpleExecContext &t_info = *(npu_cpu_ptr->threadInfo[tc->threadId()]);
+  SimpleThread* thread = t_info.thread;
+  const Addr pc = thread->instAddr(); 
+  Addr addr;
+  RequestPtr req = new Request(0, addr, 8, flags,npu_cpu_ptr->dataMasterId(), pc,
+                                 thread->contextId());
+ 
+  npu_cpu_ptr->sendData(req ,&data, &addr,true);
+ 
 }
 
+
 void
-deq_output_fifo(ThreadContext *tc, uint64_t &hostdata,uint64_t& acc_addr){
+deq_output_fifo(ThreadContext *tc, uint64_t &hostdata){
   DPRINTF(PseudoInst, "PseudoInst::deq_output_fifo\n");
-  hostdata=acc_addr; 
+  
+  hostdata=0; 
 }
 
 
@@ -275,6 +328,7 @@ arm(ThreadContext *tc)
     if (tc->getKernelStats())
         tc->getKernelStats()->arm();
 }
+
 
 void
 quiesce(ThreadContext *tc)
