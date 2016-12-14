@@ -136,7 +136,9 @@ class NpuCPU : public BaseSimpleCPU
     FetchTranslation fetchTranslation;
 
     void threadSnoop(PacketPtr pkt, ThreadID sender);
+  public:
     void sendData(RequestPtr req, uint8_t *data, uint64_t *res, bool read, bool do_npu);
+  private:
     void sendSplitData(RequestPtr req1, RequestPtr req2, RequestPtr req,
                        uint8_t *data, bool read);
 
@@ -192,8 +194,6 @@ class NpuCPU : public BaseSimpleCPU
             : TimingCPUPort(_cpu->name() + ".npu_port", _cpu),
               tickEvent(_cpu)
         {
-			BaseSlavePort *port = &(cpu->npuPtr->cpuPort);
-            bind(*port);
         }
 
       protected:
@@ -397,10 +397,6 @@ class NpuCPU : public BaseSimpleCPU
      */
     bool tryCompleteDrain();
 
-  public:
-//    Npu* getNpu() const { return npuPtr; }
-//  private:
-    Npu* npuPtr;
 };
 
 #endif // __CPU_SIMPLE_TIMING_HH__

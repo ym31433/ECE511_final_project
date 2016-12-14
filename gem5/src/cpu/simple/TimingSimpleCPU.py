@@ -40,3 +40,4 @@ class TimingSimpleCPU(BaseSimpleCPU):
     @classmethod
     def support_take_over(cls):
         return True
+

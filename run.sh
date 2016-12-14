@@ -22,7 +22,7 @@ echo "benchmark: ${benchmark_name}."
 # original version or nn version
 version=${1}
 if [ ${version} == "orig" ]; then
-    script="se.py"
+    script="npu_se.py" #TODO: change to npu_se.py?
     exe="${benchmark_name}.out"
 elif [ ${version} == "nn" ]; then
     script="npu_se.py"
@@ -34,7 +34,7 @@ else
 fi
 
 ##### set path #####
-HOME=/home/cosine/ECE511_final_project
+HOME=/research/yhtseng2/ECE511_final_project
 BENCHMARK=${HOME}/benchmark/${benchmark_name}
 IN_FILE=${BENCHMARK}/test.data/input/*.data
 FILENAME=$(basename "$IN_FILE")
@@ -44,10 +44,12 @@ LOG_FILE=${BENCHMARK}/log/${benchmark_name}_${version}.txt
 ##### run #####
 case ${benchmark_name} in
     inversek2j)
-        ${HOME}/gem5/build/X86/gem5.${gem5_version} --outdir=${BENCHMARK}/m5out/${version} ${HOME}/gem5/configs/example/${script} --cpu-type=npu_cpu -c ${BENCHMARK}/bin/${exe} -o "${IN_FILE} ${OUT_FILE}" &> ${LOG_FILE}
+        ${HOME}/gem5/build/X86/gem5.${gem5_version} --outdir=${BENCHMARK}/m5out/${version} ${HOME}/gem5/configs/example/${script} --cpu-type=npu_cpu -c ${BENCHMARK}/bin/${exe} -o "${IN_FILE} ${OUT_FILE}" 
+#&> ${LOG_FILE}
         ;;
     fft)
-        ${HOME}/gem5/build/X86/gem5.${gem5_version} --outdir=${BENCHMARK}/m5out/${version} ${HOME}/gem5/configs/example/${script} --cpu-type=npu_cpu -c ${BENCHMARK}/bin/${exe} -o "32768 ${OUT_FILE}" &> ${LOG_FILE}
+        ${HOME}/gem5/build/X86/gem5.${gem5_version} --outdir=${BENCHMARK}/m5out/${version} ${HOME}/gem5/configs/example/${script} --cpu-type=npu_cpu -c ${BENCHMARK}/bin/${exe} -o "32768 ${OUT_FILE}"
+# &> ${LOG_FILE}
         ;;
     *)
         echo "no default benchmark name allowed."

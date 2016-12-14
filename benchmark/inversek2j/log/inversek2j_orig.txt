@@ -1,0 +1,30 @@
+gem5 Simulator System.  http://gem5.org
+gem5 is copyrighted software; use the --copyright option for details.
+
+gem5 compiled Dec 13 2016 12:02:58
+gem5 started Dec 13 2016 12:18:57
+gem5 executing on wyatt-8, pid 11511
+command line: /research/yhtseng2/ECE511_final_project/gem5/build/X86/gem5.fast --outdir=/research/yhtseng2/ECE511_final_project/benchmark/inversek2j/m5out/orig /research/yhtseng2/ECE511_final_project/gem5/configs/example/se.py --cpu-type=timing -c /research/yhtseng2/ECE511_final_project/benchmark/inversek2j/bin/inversek2j.out -o '/research/yhtseng2/ECE511_final_project/benchmark/inversek2j/test.data/input/*.data /research/yhtseng2/ECE511_final_project/benchmark/inversek2j/test.data/output/*.data_inversek2j_gem5_out_orig.data#'
+
+Global frequency set at 1000000000000 ticks per second
+warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (512 Mbytes)
+0: system.remote_gdb.listener: listening for remote gdb on port 7000
+warn: ClockedObject: More than one power state change request encountered within the same simulation tick
+**** REAL SIMULATION ****
+info: Entering event queue @ 0.  Starting simulation...
+warn: ignoring syscall access(140737352001809, ...)
+warn: ignoring syscall access(140737352012832, ...)
+warn: ignoring syscall access(140737352001809, ...)
+warn: ignoring syscall mprotect(140737349550080, ...)
+warn: ignoring syscall access(140737352001809, ...)
+warn: ignoring syscall mprotect(140737346506752, ...)
+warn: ignoring syscall access(140737352001809, ...)
+warn: ignoring syscall mprotect(140737343336448, ...)
+warn: ignoring syscall access(140737352001809, ...)
+warn: ignoring syscall mprotect(140737341108224, ...)
+warn: ignoring syscall mprotect(140737343201280, ...)
+warn: ignoring syscall mprotect(140737348599808, ...)
+warn: ignoring syscall mprotect(140737351643136, ...)
+warn: ignoring syscall mprotect(6299648, ...)
+warn: ignoring syscall mprotect(140737354121216, ...)
+Exiting @ tick 397616595000 because user interrupt received

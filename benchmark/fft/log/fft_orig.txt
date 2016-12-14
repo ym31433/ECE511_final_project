@@ -1,0 +1,42 @@
+gem5 Simulator System.  http://gem5.org
+gem5 is copyrighted software; use the --copyright option for details.
+
+gem5 compiled Dec 13 2016 12:02:58
+gem5 started Dec 13 2016 12:29:07
+gem5 executing on wyatt-8, pid 11857
+command line: /research/yhtseng2/ECE511_final_project/gem5/build/X86/gem5.fast --outdir=/research/yhtseng2/ECE511_final_project/benchmark/fft/m5out_test/orig /research/yhtseng2/ECE511_final_project/gem5/configs/example/se.py --cpu-type=npu_cpu -c /research/yhtseng2/ECE511_final_project/benchmark/fft/bin/fft.out -o '32768 /research/yhtseng2/ECE511_final_project/benchmark/fft/test.data/output/*.data_fft_gem5_out_orig.data#'
+
+Global frequency set at 1000000000000 ticks per second
+warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (512 Mbytes)
+gem5 has encountered a segmentation fault!
+
+--- BEGIN LIBC BACKTRACE ---
+/research/yhtseng2/ECE511_final_project/gem5/build/X86/gem5.fast(_Z15print_backtracev+0x16)[0xd9f656]
+/research/yhtseng2/ECE511_final_project/gem5/build/X86/gem5.fast[0xd9f77d]
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x10340)[0x7f63ffc05340]
+/usr/lib/x86_64-linux-gnu/libstdc++.so.6(__dynamic_cast+0x16)[0x7f640038c156]
+/research/yhtseng2/ECE511_final_project/gem5/build/X86/gem5.fast(_ZN6NpuCPUC1EP12NpuCPUParams+0x1d1)[0xf640a1]
+/research/yhtseng2/ECE511_final_project/gem5/build/X86/gem5.fast[0xf6467d]
+/usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0(PyEval_EvalFrameEx+0x4bd4)[0x7f63ff4590d4]
+/usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0(PyEval_EvalCodeEx+0x80d)[0x7f63ff45a54d]
+/usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0(PyEval_EvalFrameEx+0x48d8)[0x7f63ff458dd8]
+/usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0(PyEval_EvalCodeEx+0x80d)[0x7f63ff45a54d]
+/usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0(PyEval_EvalFrameEx+0x48d8)[0x7f63ff458dd8]
+/usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0(PyEval_EvalCodeEx+0x80d)[0x7f63ff45a54d]
+/usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0(PyEval_EvalFrameEx+0x48d8)[0x7f63ff458dd8]
+/usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0(PyEval_EvalCodeEx+0x80d)[0x7f63ff45a54d]
+/usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0(PyEval_EvalFrameEx+0x48d8)[0x7f63ff458dd8]
+/usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0(PyEval_EvalFrameEx+0x4b59)[0x7f63ff459059]
+/usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0(PyEval_EvalCodeEx+0x80d)[0x7f63ff45a54d]
+/usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0(PyEval_EvalCode+0x32)[0x7f63ff45a682]
+/usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0(PyEval_EvalFrameEx+0x563e)[0x7f63ff459b3e]
+/usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0(PyEval_EvalCodeEx+0x80d)[0x7f63ff45a54d]
+/usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0(PyEval_EvalFrameEx+0x48d8)[0x7f63ff458dd8]
+/usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0(PyEval_EvalCodeEx+0x80d)[0x7f63ff45a54d]
+/usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0(PyEval_EvalCode+0x32)[0x7f63ff45a682]
+/usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0(PyRun_StringFlags+0x79)[0x7f63ff4544b9]
+/research/yhtseng2/ECE511_final_project/gem5/build/X86/gem5.fast(_Z6m5MainiPPc+0x7f)[0xef067f]
+/research/yhtseng2/ECE511_final_project/gem5/build/X86/gem5.fast(main+0x33)[0x60c4f3]
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf5)[0x7f63ff851ec5]
+/research/yhtseng2/ECE511_final_project/gem5/build/X86/gem5.fast[0x612207]
+--- END LIBC BACKTRACE ---

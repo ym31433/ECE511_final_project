@@ -267,7 +267,6 @@ enq_conf_fifo(ThreadContext *tc, uint64_t& hostdata){
   
   NpuCPU* npu_cpu_ptr = (NpuCPU*)tc->getCpuPtr(); 
   uint8_t data =hostdata>>56;
-  data = hostdata ;
   Addr addr;
 
   SimpleExecContext &t_info = *(npu_cpu_ptr->threadInfo[tc->threadId()]);
@@ -280,7 +279,7 @@ enq_conf_fifo(ThreadContext *tc, uint64_t& hostdata){
                                  thread->contextId());
 
 
-  npu_cpu_ptr->sendData(req ,&data, &addr,true);
+  npu_cpu_ptr->sendData(req ,&data, &addr,false, true);
   
 
 }
@@ -290,6 +289,23 @@ deq_conf_fifo(ThreadContext *tc,uint64_t& hostdata){
   DPRINTF(PseudoInst, "PseudoInst::deq_conf_fifo()\n");
   
   hostdata=0;
+  
+  NpuCPU* npu_cpu_ptr = (NpuCPU*)tc->getCpuPtr(); 
+  Addr addr;
+
+  SimpleExecContext &t_info = *(npu_cpu_ptr->threadInfo[tc->threadId()]);
+  SimpleThread* thread = t_info.thread;
+  const Addr pc = thread->instAddr(); 
+
+
+  Request::Flags flags = 0x00008000; //PRIVILEGED 
+  RequestPtr req = new Request(0, addr, 8, flags ,npu_cpu_ptr->dataMasterId(), pc,
+                                 thread->contextId());
+
+  uint8_t data;
+
+  npu_cpu_ptr->sendData(req ,&data, &addr,true, true);
+ 
 }
 
 void
@@ -305,7 +321,7 @@ enq_input_fifo(ThreadContext *tc, uint64_t& hostdata){
   RequestPtr req = new Request(0, addr, 8, flags,npu_cpu_ptr->dataMasterId(), pc,
                                  thread->contextId());
  
-  npu_cpu_ptr->sendData(req ,&data, &addr,true);
+  npu_cpu_ptr->sendData(req ,&data, &addr,false, true);
  
 }
 
@@ -315,6 +331,18 @@ deq_output_fifo(ThreadContext *tc, uint64_t &hostdata){
   DPRINTF(PseudoInst, "PseudoInst::deq_output_fifo\n");
   
   hostdata=0; 
+  NpuCPU* npu_cpu_ptr = (NpuCPU*)tc->getCpuPtr(); 
+  Request::Flags flags = 0x00008000; //PRIVILEGED 
+  SimpleExecContext &t_info = *(npu_cpu_ptr->threadInfo[tc->threadId()]);
+  SimpleThread* thread = t_info.thread;
+  const Addr pc = thread->instAddr(); 
+  Addr addr;
+  RequestPtr req = new Request(0, addr, 8, flags,npu_cpu_ptr->dataMasterId(), pc,
+                                 thread->contextId());
+  uint8_t data;
+
+  npu_cpu_ptr->sendData(req ,&data, &addr,true, true);
+ 
 }
 
 

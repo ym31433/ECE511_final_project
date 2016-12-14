@@ -32,6 +32,9 @@ from BaseSimpleCPU import BaseSimpleCPU
 class NpuCPU(BaseSimpleCPU):
     type = 'NpuCPU'
     cxx_header = "cpu/simple/npu_cpu.hh"
+    # not sure if it is implemented in this way
+    npuPort = MasterPort("Npu Port");
+    #_uncached_master_ports = BaseSimpleCPU.BaseCPU._uncached_master_ports + ['npuPort']
 
     @classmethod
     def memory_mode(cls):
@@ -41,7 +44,3 @@ class NpuCPU(BaseSimpleCPU):
     def support_take_over(cls):
         return True
 
-	# not sure if it is implemented in this way
-	npuPort = MasterPort("Npu Port");
-	_uncached_master_ports = BaseSimpleCPU.BaseCPU._uncached_master_ports + \
-		['npuPort']
