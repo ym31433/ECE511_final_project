@@ -17,3 +17,5 @@ class Npu(MemObject):
     numNeurons_2 = Param.Int(0, 'number of hidden layer 2 neurons')
     numWeights = Param.Int(0, 'number of weights')
     calculateTick = Param.Tick(2**64-1, 'the time npu spends to calculate')
+    weightCount = Param.Int(0, 'weight counting')
+    inputCount = Param.Int(0, 'input counting')

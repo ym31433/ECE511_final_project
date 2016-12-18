@@ -18,8 +18,8 @@
             "p_state_clk_gate_max": 1000000000000, 
             "master": {
                 "peer": [
-                    "system.cpu.interrupts.pio", 
-                    "system.cpu.interrupts.int_slave", 
+                    "system.cpu0.interrupts.pio", 
+                    "system.cpu0.interrupts.int_slave", 
                     "system.mem_ctrls.port"
                 ], 
                 "role": "MASTER"
@@ -29,11 +29,11 @@
             "slave": {
                 "peer": [
                     "system.system_port", 
-                    "system.cpu.icache_port", 
-                    "system.cpu.dcache_port", 
-                    "system.cpu.itb.walker.port", 
-                    "system.cpu.dtb.walker.port", 
-                    "system.cpu.interrupts.int_master"
+                    "system.cpu0.icache_port", 
+                    "system.cpu0.dcache_port", 
+                    "system.cpu0.itb.walker.port", 
+                    "system.cpu0.dtb.walker.port", 
+                    "system.cpu0.interrupts.int_master"
                 ], 
                 "role": "SLAVE"
             }, 
@@ -157,7 +157,7 @@
                         "eventq_index": 0, 
                         "default_p_state": "UNDEFINED", 
                         "p_state_clk_gate_max": 1000000000000, 
-                        "path": "system.cpu.itb.walker", 
+                        "path": "system.cpu0.itb.walker", 
                         "type": "X86PagetableWalker", 
                         "port": {
                             "peer": "system.membus.slave[3]", 
@@ -165,21 +165,25 @@
                         }, 
                         "num_squash_per_cycle": 4
                     }, 
-                    "path": "system.cpu.itb", 
+                    "path": "system.cpu0.itb", 
                     "type": "X86TLB", 
                     "size": 64
                 }, 
                 "system": "system", 
+                "npuPort": {
+                    "peer": "system.cpu1.cpuPort", 
+                    "role": "MASTER"
+                }, 
                 "function_trace": false, 
                 "do_checkpoint_insts": true, 
-                "cxx_class": "TimingSimpleCPU", 
+                "cxx_class": "NpuCPU", 
                 "max_loads_all_threads": 0, 
                 "apic_clk_domain": {
                     "name": "apic_clk_domain", 
                     "clk_domain": "system.cpu_clk_domain", 
                     "eventq_index": 0, 
                     "cxx_class": "DerivedClockDomain", 
-                    "path": "system.cpu.apic_clk_domain", 
+                    "path": "system.cpu0.apic_clk_domain", 
                     "type": "DerivedClockDomain", 
                     "clk_divider": 16
                 }, 
@@ -191,7 +195,7 @@
                 "default_p_state": "UNDEFINED", 
                 "p_state_clk_gate_max": 1000000000000, 
                 "do_quiesce": true, 
-                "type": "TimingSimpleCPU", 
+                "type": "NpuCPU", 
                 "profile": 0, 
                 "icache_port": {
                     "peer": "system.membus.slave[1]", 
@@ -218,14 +222,14 @@
                         "p_state_clk_gate_bins": 20, 
                         "cxx_class": "X86ISA::Interrupts", 
                         "pio_latency": 100000, 
-                        "clk_domain": "system.cpu.apic_clk_domain", 
+                        "clk_domain": "system.cpu0.apic_clk_domain", 
                         "power_model": null, 
                         "system": "system", 
                         "int_latency": 1000, 
                         "eventq_index": 0, 
                         "default_p_state": "UNDEFINED", 
                         "p_state_clk_gate_max": 1000000000000, 
-                        "path": "system.cpu.interrupts", 
+                        "path": "system.cpu0.interrupts", 
                         "pio_addr": 2305843009213693952, 
                         "type": "X86LocalApic"
                     }
@@ -237,7 +241,7 @@
                 "socket_id": 0, 
                 "power_model": null, 
                 "max_insts_all_threads": 0, 
-                "path": "system.cpu", 
+                "path": "system.cpu0", 
                 "max_loads_any_thread": 0, 
                 "switched_out": false, 
                 "workload": [
@@ -258,13 +262,13 @@
                         "cwd": "/research/yhtseng2/ECE511_final_project", 
                         "simpoint": 0, 
                         "euid": 100, 
-                        "path": "system.cpu.workload", 
+                        "path": "system.cpu0.workload", 
                         "max_stack_size": 67108864, 
                         "name": "workload", 
                         "cmd": [
                             "/research/yhtseng2/ECE511_final_project/benchmark/fft/bin/fft.out", 
                             "32768", 
-                            "/research/yhtseng2/ECE511_final_project/benchmark/fft/test.data/output/*.data_fft_gem5_out_orig.data#"
+                            "/research/yhtseng2/ECE511_final_project/benchmark/fft/test.data/output/*.data_fft_gem5_out_orig.data"
                         ], 
                         "errout": "cerr", 
                         "useArchPT": false, 
@@ -272,7 +276,7 @@
                         "output": "cout"
                     }
                 ], 
-                "name": "cpu", 
+                "name": "cpu0", 
                 "dtb": {
                     "name": "dtb", 
                     "eventq_index": 0, 
@@ -288,7 +292,7 @@
                         "eventq_index": 0, 
                         "default_p_state": "UNDEFINED", 
                         "p_state_clk_gate_max": 1000000000000, 
-                        "path": "system.cpu.dtb.walker", 
+                        "path": "system.cpu0.dtb.walker", 
                         "type": "X86PagetableWalker", 
                         "port": {
                             "peer": "system.membus.slave[4]", 
@@ -296,7 +300,7 @@
                         }, 
                         "num_squash_per_cycle": 4
                     }, 
-                    "path": "system.cpu.dtb", 
+                    "path": "system.cpu0.dtb", 
                     "type": "X86TLB", 
                     "size": 64
                 }, 
@@ -307,7 +311,7 @@
                 "isa": [
                     {
                         "eventq_index": 0, 
-                        "path": "system.cpu.isa", 
+                        "path": "system.cpu0.isa", 
                         "type": "X86ISA", 
                         "name": "isa", 
                         "cxx_class": "X86ISA::ISA"
@@ -315,11 +319,36 @@
                 ], 
                 "tracer": {
                     "eventq_index": 0, 
-                    "path": "system.cpu.tracer", 
+                    "path": "system.cpu0.tracer", 
                     "type": "ExeTracer", 
                     "name": "tracer", 
                     "cxx_class": "Trace::ExeTracer"
                 }
+            }, 
+            {
+                "p_state_clk_gate_bins": 20, 
+                "numNeurons_1": 0, 
+                "name": "cpu1", 
+                "p_state_clk_gate_min": 1000, 
+                "numNeurons_2": 0, 
+                "numWeights": 0, 
+                "default_p_state": "UNDEFINED", 
+                "numOutputs": 0, 
+                "clk_domain": "system.cpu_clk_domain", 
+                "power_model": null, 
+                "cpuPort": {
+                    "peer": "system.cpu0.npuPort", 
+                    "role": "SLAVE"
+                }, 
+                "eventq_index": 0, 
+                "numInputs": 0, 
+                "cxx_class": "Npu", 
+                "p_state_clk_gate_max": 1000000000000, 
+                "path": "system.cpu1", 
+                "numLayers": 0, 
+                "type": "Npu", 
+                "calculateTick": 18446744073709551615, 
+                "callRetry": false
             }
         ], 
         "multi_thread": false, 

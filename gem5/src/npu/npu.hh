@@ -69,6 +69,17 @@ class Npu : public MemObject {
 //          atomicOperation(PacketPtr packet);
     };
 
+	class PE {
+	  public:
+		PE() {}
+		void insertWeight(const uint8_t data) { weightBuffer.push(data); }
+		void insertInput(const uint8_t data) { inputFIFO.push(data); }
+	  private:
+		std::queue<uint8_t> weightBuffer;
+		std::queue<uint8_t> inputFIFO;
+		std::queue<uint8_t> outputFIFO;
+	};
+
   public:
 	void process();
 	bool returnQueuePush(std::pair<Tick, PacketPtr> thePair);
@@ -95,6 +106,7 @@ class Npu : public MemObject {
 
 	CpuPort cpuPort;
 	TickEvent tickEvent;
+	PE pe[8];
 
 	bool callRetry;
 
@@ -106,7 +118,11 @@ class Npu : public MemObject {
 	int numWeights;
 	Tick calculateTick;
 
-	std::queue<uint8_t> inputQueue, configQueue, outputQueue;
+	int weightCount;
+	int inputCount;
+	//std::queue<uint8_t> inputQueue;
+	//std::queue<uint8_t> configQueue;
+	std::queue<uint8_t> outputQueue;
 	std::queue<std::pair<Tick, PacketPtr>> returnQueue;
 };
 

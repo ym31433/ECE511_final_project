@@ -14,7 +14,9 @@ Npu::Npu(const Params *p) :
 	numNeurons_1(p->numNeurons_1),
 	numNeurons_2(p->numNeurons_2),
 	numWeights(p->numWeights),
-	calculateTick(p->calculateTick)
+	calculateTick(p->calculateTick),
+	weightCount(p->weightCount),
+	inputCount(p->inputCount)
 {
 }
 
@@ -57,13 +59,39 @@ Npu::writeData(PacketPtr pkt) {
 					numNeurons_2*numOutputs;
 		return;
 	}
-	else if(configQueue.size() < numWeights) {
-		configQueue.push(data);
+	else if(weightCount < numWeights) {
+		int id = weightCount;
+		if(id < numInputs*numNeurons_1) {
+			pe[id/numInputs].insertWeight(data);
+		}
+		else {
+			id = id - numInputs*numNeurons_1;
+		 	if(numLayers == 1) {
+				if(id < numNeurons_1*numOutputs) {
+					pe[id/numNeurons_1].insertWeight(data);
+				}
+			}
+			else { // number of layers is 2
+				if(id < numNeurons_1*numNeurons_2) {
+					pe[id/numNeurons_1].insertWeight(data);
+				}
+				else {
+					id = id - numNeurons_1*numNeurons_2;
+					if(id < numNeurons_2*numOutputs) {
+						pe[id/numNeurons_2].insertWeight(data);
+					}
+				}
+			}
+		}
+		weightCount++;
 		return;
 	}
-	else if(inputQueue.size() < numInputs) {
-		inputQueue.push(data);
-		if(inputQueue.size() == numInputs) {
+	else if(inputCount < numInputs) {
+		for(int i = 0; i != 8; ++i) {
+			pe[i].insertInput(data);
+		}
+		inputCount++;
+		if(inputCount == numInputs) {
 			calculate();
 		}
 		return;
