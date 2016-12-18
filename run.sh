@@ -8,28 +8,28 @@ elif [ "$#" -eq 2 ]; then #default
     gem5_version="opt"
 else
     echo "Wrong arguments!"
-    echo "Usage: ./run.sh [orig/nn] [benchmark] [opt/fast]"
+    echo "Usage: ./run.sh <orig/nn> <fft/inversek2j> <opt/fast>"
     exit 1
 fi
 # benchmark
 benchmark_name=${2}
 if [ ${benchmark_name} != "inversek2j" -a ${benchmark_name} != "fft" ]; then
     echo "Wrong arguments!"
-    echo "Usage: ./run.sh [orig/nn] [benchmark] [opt/fast]"
+    echo "Usage: ./run.sh <orig/nn> <fft/inversek2j> <opt/fast>"
     exit 1
 fi
 echo "benchmark: ${benchmark_name}."
 # original version or nn version
 version=${1}
 if [ ${version} == "orig" ]; then
-    script="npu_se.py" #TODO: change to npu_se.py?
+    script="npu_se.py"
     exe="${benchmark_name}.out"
 elif [ ${version} == "nn" ]; then
     script="npu_se.py"
     exe="${benchmark_name}.nn.out"
 else
     echo "Wrong arguments!"
-    echo "Usage: ./run.sh [orig/nn] [benchmark] [opt/fast]"
+    echo "Usage: ./run.sh <orig/nn> <fft/inversek2j> <opt/fast>"
     exit 1
 fi
 
